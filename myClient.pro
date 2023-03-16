@@ -9,6 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    pages/fileupload.cpp \
     pages\groupmanage.cpp \
     net\dispatcher.cpp \
     net\tcpsession.cpp \
@@ -20,6 +21,7 @@ SOURCES += \
 
 
 HEADERS += \
+    pages/fileupload.h \
     pages\groupmanage.h \
     net\dispatcher.h \
     net\tcpsession.h \

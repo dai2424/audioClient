@@ -191,7 +191,7 @@ void GroupManage::RequestAddDevToGroup(uint gpNo, uint devNo)
 void GroupManage::InitUI()
 {
     //界面主布局
-    QHBoxLayout *mainLayout = new QHBoxLayout(this);
+    QHBoxLayout *mainLayout = new QHBoxLayout();
     this->setLayout(mainLayout);
 
 /* 分组列表 */

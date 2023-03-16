@@ -16,13 +16,15 @@ void TcpSession::Dispatch() {
 
     while(!in.atEnd()) {
         QByteArray array;
+        qint64 size;
+        in >> size;
         in >> array;
+        qDebug() << size;
         QJsonDocument doc = QJsonDocument::fromJson(array);
         QJsonObject obj = doc.object();
         QString response = obj.value("response").toString();
 
         Dispatcher::GetDispatcher()->Dispatch(response, obj, this);
-
     }
 }
 
@@ -33,8 +35,12 @@ void TcpSession::WriteJson(QJsonObject &obj) {
     QByteArray array = doc.toJson();
 
     QDataStream out(this);
-    out << array;
+    out.setVersion(QDataStream::Qt_5_15);
+    out << (qint64)array.size();
+    out.writeRawData(array.constData(), array.size());
+
     this->flush();
+    this->waitForBytesWritten();
 }
 
 bool TcpSession::ConnectTo(QString address, int port)

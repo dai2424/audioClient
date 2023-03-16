@@ -3,6 +3,7 @@
 #include "net/tcpsession.h"
 
 #include "pages/groupmanage.h"
+#include "pages/fileupload.h"
 
 #include <QStackedWidget>
 #include <QVBoxLayout>
@@ -69,8 +70,10 @@ void Menu::SlotSetPage(QString pageName)
 
         }
         if(pageName == "文件上传") {    //示例代码
-
-
+            FileUpload *pages = new FileUpload(this, m_session);
+            int index = u_pages->addWidget(pages);
+            m_pageMappper.insert("文件上传", index);
+            u_pages->setCurrentIndex(index);
         }
         if(pageName == "文件审核") {    //示例代码
 
