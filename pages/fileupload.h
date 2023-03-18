@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QWidget>
 
+class QComboBox;
 class QLabel;
 class QLineEdit;
 class TcpSession;
@@ -24,23 +25,18 @@ private:
 
 //界面
 private:
-    QWidget *bgWidget;
-    QWidget *toolWidget;
-    QLineEdit *filePath;
-    QLineEdit *fileName;
-    QPushButton *clooseFileBtn;
-    QPushButton *sendFileBtn;
+    QWidget *u_bgWidget;
+    QWidget *u_toolWidget;
+    QLineEdit *u_filePathEdit;
+    QLineEdit *u_fileNameEdit;
+    QPushButton *u_sendBtn;
+    QComboBox *u_fileTypeBox;
 
-    void sendJson();
+    void InitUI();
     void ClooseFile();
 //请求和响应
 private:
-
-
-
-
-signals:
-
+    void UpLoadFile();
 
     // QWidget interface
 protected:
