@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     pages/fileupload.cpp \
+    pages/page.cpp \
     pages\groupmanage.cpp \
     net\dispatcher.cpp \
     net\tcpsession.cpp \
@@ -22,6 +23,7 @@ SOURCES += \
 
 HEADERS += \
     pages/fileupload.h \
+    pages/page.h \
     pages\groupmanage.h \
     net\dispatcher.h \
     net\tcpsession.h \

@@ -54,23 +54,34 @@ void Menu::initUI()
 void Menu::SlotSetPage(QString pageName)
 {
     qDebug() << pageName;
+
     //创建和切换页面
     if(m_pageMappper.count(pageName)) {
-        u_pages->setCurrentIndex(m_pageMappper.value(pageName));
+        qobject_cast<Page*>(u_pages->currentWidget())->FreezeFuncs();   //休眠页面功能
+        u_pages->setCurrentIndex(m_pageMappper.value(pageName));        //切换页面
+        qobject_cast<Page*>(u_pages->currentWidget())->ActFuncs();      //激活页面功能
     }
     else {
+        //如果已经有页面的情况下，先休眠原页面功能
+        if(u_pages->count() > 0) {
+            qobject_cast<Page*>(u_pages->currentWidget())->FreezeFuncs();
+        }
 
+        //创建页面
         if(pageName == "分组管理") {
             GroupManage *pages = new GroupManage(this, m_session);
+            pages->ActFuncs();
             int index = u_pages->addWidget(pages);
             m_pageMappper.insert("分组管理", index);
             u_pages->setCurrentIndex(index);
+
         }
         if(pageName == "节目管理") {    //示例代码
 
         }
         if(pageName == "文件上传") {    //示例代码
             FileUpload *pages = new FileUpload(this, m_session);
+            pages->ActFuncs();
             int index = u_pages->addWidget(pages);
             m_pageMappper.insert("文件上传", index);
             u_pages->setCurrentIndex(index);

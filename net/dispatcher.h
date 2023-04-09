@@ -20,7 +20,8 @@ private:
     using Func = std::function<void(QJsonObject&, TcpSession*)>;
     using pFuncQString = std::pair<Func, QString>;
     std::multimap<QString, pFuncQString> mapper;    //分发器数据结构
-
+    using FuncSignature = std::pair<QString, QString>;
+    std::map<FuncSignature, bool> statusMap;        //函数状态
     // 私有化构造
     Dispatcher();
     ~Dispatcher();
@@ -29,12 +30,13 @@ private:
     Dispatcher operator=(const Dispatcher&) = delete;
 
 public:
-    static Dispatcher* GetDispatcher(); //获取分发器实例
+    static Dispatcher* GetDispatcher();                 //获取分发器实例
 
-    void RegitserFunc(QString, pFuncQString&&);   //注册函数功能
-    void LogoutFunc(QString response, QString func);   //注销函数功能
-
-    void Dispatch(QString& , QJsonObject &, TcpSession*);    //根据QString分发Json
+    void RegitserFunc(QString, pFuncQString&&);         //注册函数功能
+    void LogoutFunc(QString response, QString func);    //注销函数功能
+    void ActFunc(QVector<FuncSignature> &funcStVec);    //激活函数列能
+    void FreezeFunc(QVector<FuncSignature> &funcStVec); //冻结函数功能
+    void Dispatch(QString& , QJsonObject &, TcpSession*); //根据QString分发Json
 
     //返回函数列表,可能会造成空悬指针,不建议使用
     std::vector<Func> GetFuncs(QString&);

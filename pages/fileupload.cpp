@@ -18,20 +18,26 @@
 #include <qcombobox.h>
 
 FileUpload::FileUpload(QWidget *parent, TcpSession *session)
-    : QWidget(parent), m_session(session)
+    : Page{parent, session}
 {
     InitUI();
+    RegisterFunc();
 }
 
 void FileUpload::RegisterFunc()
 {
-
+    using namespace std::placeholders;
+    //类型别名
+    using Func = std::function<void(QJsonObject &, TcpSession *)>;
+    //引用分发器的指针
+    Dispatcher *dispatcher = Dispatcher::GetDispatcher();
 }
 
 void FileUpload::LogoutFunc()
 {
 
 }
+
 
 void FileUpload::InitUI()
 {

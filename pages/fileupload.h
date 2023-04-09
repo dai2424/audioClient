@@ -1,6 +1,8 @@
 ﻿#ifndef FILEUPLOAD_H
 #define FILEUPLOAD_H
 
+#include "page.h"
+
 #include <QObject>
 #include <QWidget>
 
@@ -12,7 +14,7 @@ class QPushButton;
 class QListWidget;
 class QTableWidget;
 
-class FileUpload : public QWidget
+class FileUpload : public Page
 {
     Q_OBJECT
 public:
@@ -21,7 +23,6 @@ public:
 private:
     void RegisterFunc();
     void LogoutFunc();
-    TcpSession *m_session;
 
 //界面
 private:

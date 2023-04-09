@@ -1,6 +1,7 @@
 ﻿#ifndef GROUPMANAGE_H
 #define GROUPMANAGE_H
 
+#include "page.h"
 #include <QWidget>
 #include <QDialog>
 
@@ -11,7 +12,7 @@ class QPushButton;
 class QListWidget;
 class QTableWidget;
 
-class GroupManage : public QWidget
+class GroupManage : public Page
 {
     Q_OBJECT
 public:
@@ -39,7 +40,6 @@ private:
 private:
     void RegisterFunc();
     void LogoutFunc();
-    TcpSession *m_session;
 
 //界面
 private:

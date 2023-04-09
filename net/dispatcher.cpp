@@ -20,8 +20,8 @@ Dispatcher::~Dispatcher() {
 }
 
 void Dispatcher::RegitserFunc(QString response, pFuncQString&& pfunc) {
-    mapper.insert({response, pfunc});   //隐式转换为std::pair
-
+    mapper.insert({response, pfunc});                   //隐式转换为std::pair
+    statusMap.insert({{response, pfunc.second}, true}); //添加函数状态
     return;
 }
 
@@ -40,11 +40,30 @@ void Dispatcher::LogoutFunc(QString response, QString func) {
     return;
 }
 
+void Dispatcher::ActFunc(QVector<FuncSignature> &funcStVec)
+{
+    for(auto const &funcSt : funcStVec) {
+        statusMap[funcSt] = true;
+    }
+}
+
+void Dispatcher::FreezeFunc(QVector<FuncSignature> &funcStVec)
+{
+    for(auto const &funcSt : funcStVec) {
+        qDebug() << "FreezeFunc : " << funcSt.first << ", " << funcSt.second;
+        statusMap[funcSt] = false;
+    }
+}
+
 
 void Dispatcher::Dispatch(QString& identification, QJsonObject &obj, TcpSession *session) {
     auto range = mapper.equal_range(identification);
+    FuncSignature fs;
+    fs.first = identification;
     for(auto it = range.first; it != range.second; ++it) {
-        it->second.first(obj, session);
+        fs.second = it->second.second;
+        if(statusMap[fs])
+            it->second.first(obj, session);
     }
 }
 

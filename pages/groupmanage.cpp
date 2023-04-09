@@ -17,7 +17,7 @@
 #include <QInputDialog>
 
 GroupManage::GroupManage(QWidget *parent, TcpSession *session)
-    : QWidget{parent}, m_session(session)
+    : Page{parent, session}
 {
     InitUI();
     RegisterFunc();
@@ -44,6 +44,9 @@ void GroupManage::RegisterFunc()
 
     Func responseDevList = std::bind(&GroupManage::ResponseDevList, this, _1, _2);
     dispatcher->RegitserFunc("reGetGroupDevs", {responseDevList, "ResponseDevList"});
+
+    m_funcStVec.push_back({"reGetGroupList", "ResponseGroups"});
+    m_funcStVec.push_back({"reGetGroupDevs", "ResponseDevList"});
 }
 
 void GroupManage::LogoutFunc()
@@ -51,8 +54,14 @@ void GroupManage::LogoutFunc()
     //引用分发器的指针
     Dispatcher *dispatcher = Dispatcher::GetDispatcher();
 
+    //注销功能
+    for(auto &funcSt : m_funcStVec) {
+        dispatcher->LogoutFunc(funcSt.first, funcSt.second);
+    }
+/**
     dispatcher->LogoutFunc("reGetGroupList", "ResponseGroups");
     dispatcher->LogoutFunc("regetGroupDevs", "ResponseDevList");
+**/
 }
 
 /** 请求和响应函数 **/
